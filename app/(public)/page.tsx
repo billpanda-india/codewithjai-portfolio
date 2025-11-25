@@ -1,11 +1,10 @@
-import { getPageBySlug, getFeaturedProjects, getAllSkills, getAllTestimonials, getSiteLinks } from "@/lib/supabase/queries";
+import { getPageBySlug, getFeaturedProjects, getAllSkills, getAllTestimonials } from "@/lib/supabase/queries";
 import HeroSection from "@/components/HeroSection";
 import ProjectsSection from "@/components/sections/ProjectsSection";
 import SkillsSection from "@/components/sections/SkillsSection";
 import ProcessSection from "@/components/sections/ProcessSection";
 import TestimonialsSection from "@/components/sections/TestimonialsSection";
 import CTASection from "@/components/sections/CTASection";
-import SiteLinksSection from "@/components/sections/SiteLinksSection";
 import { generatePageMetadata } from "@/lib/metadata";
 
 export const revalidate = 0; // No cache during development
@@ -15,12 +14,11 @@ export async function generateMetadata() {
 }
 
 export default async function Home() {
-  const [homePage, featuredProjects, skills, testimonials, siteLinks] = await Promise.all([
+  const [homePage, featuredProjects, skills, testimonials] = await Promise.all([
     getPageBySlug('home'),
     getFeaturedProjects(),
     getAllSkills(),
     getAllTestimonials(),
-    getSiteLinks(),
   ]);
 
   return (
@@ -65,12 +63,6 @@ export default async function Home() {
         stat2Label={homePage?.cta_stat2_label}
         stat3Number={homePage?.cta_stat3_number}
         stat3Label={homePage?.cta_stat3_label}
-      />
-
-      <SiteLinksSection 
-        links={siteLinks}
-        title="Quick Links"
-        subtitle="Explore popular sections of my portfolio"
       />
     </>
   );
