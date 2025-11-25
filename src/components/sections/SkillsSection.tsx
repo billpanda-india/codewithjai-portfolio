@@ -1,14 +1,8 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import Image from 'next/image'
-import { 
-  SiReact, SiNextdotjs, SiTypescript, SiTailwindcss, SiVuedotjs,
-  SiNodedotjs, SiExpress, SiNestjs, SiGraphql,
-  SiMongodb, SiPostgresql, SiRedis,
-  SiDocker, SiKubernetes, SiFigma
-} from 'react-icons/si'
-import { Cloud } from 'lucide-react'
+import * as SimpleIcons from 'react-icons/si'
+import * as LucideIcons from 'lucide-react'
 import { Skill } from '@/types/database'
 
 interface SkillsSectionProps {
@@ -17,46 +11,21 @@ interface SkillsSectionProps {
   skills: Skill[]
 }
 
-const techIcons: Record<string, any> = {
-  // By name (lowercase)
-  'react': SiReact,
-  'next.js': SiNextdotjs,
-  'nextjs': SiNextdotjs,
-  'typescript': SiTypescript,
-  'tailwind css': SiTailwindcss,
-  'tailwind': SiTailwindcss,
-  'vue.js': SiVuedotjs,
-  'vue': SiVuedotjs,
-  'node.js': SiNodedotjs,
-  'nodejs': SiNodedotjs,
-  'express': SiExpress,
-  'nestjs': SiNestjs,
-  'graphql': SiGraphql,
-  'mongodb': SiMongodb,
-  'postgresql': SiPostgresql,
-  'postgres': SiPostgresql,
-  'redis': SiRedis,
-  'docker': SiDocker,
-  'kubernetes': SiKubernetes,
-  'aws': Cloud,
-  'figma': SiFigma,
-  // By icon name (from database logo field)
-  'SiReact': SiReact,
-  'SiNextdotjs': SiNextdotjs,
-  'SiTypescript': SiTypescript,
-  'SiTailwindcss': SiTailwindcss,
-  'SiVuedotjs': SiVuedotjs,
-  'SiNodedotjs': SiNodedotjs,
-  'SiExpress': SiExpress,
-  'SiNestjs': SiNestjs,
-  'SiGraphql': SiGraphql,
-  'SiMongodb': SiMongodb,
-  'SiPostgresql': SiPostgresql,
-  'SiRedis': SiRedis,
-  'SiDocker': SiDocker,
-  'SiKubernetes': SiKubernetes,
-  'Cloud': Cloud,
-  'SiFigma': SiFigma,
+// Dynamic icon loader - loads ANY icon from react-icons
+function getIconComponent(iconName: string) {
+  if (!iconName) return null
+  
+  // Try Simple Icons (Si prefix)
+  if (iconName.startsWith('Si')) {
+    const Icon = (SimpleIcons as any)[iconName]
+    if (Icon) return Icon
+  }
+  
+  // Try Lucide Icons
+  const LucideIcon = (LucideIcons as any)[iconName]
+  if (LucideIcon) return LucideIcon
+  
+  return null
 }
 
 const categoryGradients: Record<string, string> = {
@@ -139,8 +108,8 @@ export default function SkillsSection({ heading, description, skills }: SkillsSe
                   <div className={`${isLeft ? 'md:col-start-2 md:pl-16' : 'md:col-start-1 md:row-start-1 md:pr-16'} pl-24 md:pl-0 md:pr-0`}>
                     <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                       {categorySkills.map((skill, index) => {
-                        // Use logo field from database (contains icon name like "SiReact", "Cloud")
-                        const Icon = skill.logo ? (techIcons[skill.logo] || techIcons[skill.name.toLowerCase()]) : techIcons[skill.name.toLowerCase()]
+                        // Dynamically load icon from database logo field
+                        const Icon = skill.logo ? getIconComponent(skill.logo) : null
                         
                         return (
                           <motion.div
@@ -157,7 +126,7 @@ export default function SkillsSection({ heading, description, skills }: SkillsSe
                               {Icon ? (
                                 <Icon className="w-10 h-10 text-gray-700 dark:text-gray-300" />
                               ) : (
-                                <div className={`w-10 h-10 bg-gradient-to-br ${gradient} rounded-xl flex items-center justify-center text-white font-bold`}>
+                                <div className={`w-10 h-10 bg-gradient-to-br ${gradient} rounded-xl flex items-center justify-center text-white font-bold text-lg`}>
                                   {skill.name[0]}
                                 </div>
                               )}
