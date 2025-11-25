@@ -1,6 +1,6 @@
-"use client";
+;
 import React from "react";
-import { motion } from "motion/react";
+;
 
 interface Certification {
   title: string;
@@ -18,17 +18,9 @@ export const CertificationsColumn = (props: {
 }) => {
   return (
     <div className={props.className}>
-      <motion.div
-        animate={{
-          translateY: "-50%",
-        }}
-        transition={{
-          duration: props.duration || 10,
-          repeat: Infinity,
-          ease: "linear",
-          repeatType: "loop",
-        }}
-        className="flex flex-col gap-6 pb-6"
+      <div 
+        className="flex flex-col gap-6 pb-6 animate-scroll"
+        style={{ animationDuration: `${props.duration || 10}s` }}
       >
         {[
           ...new Array(2).fill(0).map((_, index) => (
@@ -91,7 +83,7 @@ export const CertificationsColumn = (props: {
             </React.Fragment>
           )),
         ]}
-      </motion.div>
+      </div>
     </div>
   );
 };
