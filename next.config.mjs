@@ -17,34 +17,34 @@ const nextConfig = {
     ],
     unoptimized: false,
   },
+  productionBrowserSourceMaps: false,
+  compress: true,
+  poweredByHeader: false,
   async headers() {
     return [
       {
-        // Allow homepage to be embedded in iframes (for project previews)
-        source: '/',
+        source: '/:path*',
         headers: [
           {
-            key: 'X-Frame-Options',
-            value: 'ALLOWALL',
+            key: 'X-DNS-Prefetch-Control',
+            value: 'on'
           },
           {
-            key: 'Content-Security-Policy',
-            value: "frame-ancestors *",
-          },
-        ],
-      },
-      {
-        // Block all other pages from being embedded
-        source: '/:path((?!$).*)*',
-        headers: [
-          {
-            key: 'X-Frame-Options',
-            value: 'SAMEORIGIN',
+            key: 'Strict-Transport-Security',
+            value: 'max-age=63072000; includeSubDomains; preload'
           },
           {
-            key: 'Content-Security-Policy',
-            value: "frame-ancestors 'self'",
+            key: 'X-Content-Type-Options',
+            value: 'nosniff'
           },
+          {
+            key: 'Referrer-Policy',
+            value: 'origin-when-cross-origin'
+          },
+          {
+            key: 'Permissions-Policy',
+            value: 'camera=(), microphone=(), geolocation=()'
+          }
         ],
       },
     ]
