@@ -1,6 +1,3 @@
-'use client'
-
-import { motion } from 'framer-motion'
 import * as SimpleIcons from 'react-icons/si'
 import * as LucideIcons from 'lucide-react'
 import { Skill } from '@/types/database'
@@ -44,12 +41,7 @@ export default function SkillsSection({ heading, description, skills }: SkillsSe
     <section className="relative py-32 bg-gradient-to-b from-white to-gray-50 dark:from-black dark:to-gray-950">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-20"
-        >
+        <div className="text-center mb-20 animate-fade-in-up">
           <h2 className="text-5xl md:text-7xl font-black text-black dark:text-white mb-6">
             {heading || "Tech Stack"}
           </h2>
@@ -58,7 +50,7 @@ export default function SkillsSection({ heading, description, skills }: SkillsSe
               {description}
             </p>
           )}
-        </motion.div>
+        </div>
 
         {/* Vertical Showcase with Timeline */}
         <div className="relative">
@@ -73,34 +65,24 @@ export default function SkillsSection({ heading, description, skills }: SkillsSe
               const isLeft = catIndex % 2 === 0
 
               return (
-                <motion.div
+                <div
                   key={category}
-                  initial={{ opacity: 0, x: isLeft ? -50 : 50 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  transition={{ duration: 0.8 }}
-                  className={`relative grid md:grid-cols-2 gap-8 items-center ${isLeft ? '' : 'md:grid-flow-dense'}`}
+                  className={`relative grid md:grid-cols-2 gap-8 items-center ${isLeft ? '' : 'md:grid-flow-dense'} animate-fade-in-up opacity-0`}
+                  style={{ animationDelay: `${catIndex * 200}ms`, animationFillMode: 'forwards' }}
                 >
                   {/* Timeline Dot */}
-                  <motion.div
-                    initial={{ scale: 0 }}
-                    whileInView={{ scale: 1 }}
-                    viewport={{ once: true }}
-                    className={`absolute left-8 md:left-1/2 w-16 h-16 -ml-8 bg-gradient-to-br ${gradient} rounded-full border-4 border-white dark:border-black shadow-2xl flex items-center justify-center z-10`}
+                  <div 
+                    className={`absolute left-8 md:left-1/2 w-16 h-16 -ml-8 bg-gradient-to-br ${gradient} rounded-full border-4 border-white dark:border-black shadow-2xl flex items-center justify-center z-10 animate-scale-in opacity-0`}
+                    style={{ animationDelay: `${catIndex * 200 + 300}ms`, animationFillMode: 'forwards' }}
                   >
                     <span className="text-white font-black text-xl">{catIndex + 1}</span>
-                  </motion.div>
+                  </div>
 
                   {/* Category Title */}
                   <div className={`${isLeft ? 'md:text-right md:pr-16' : 'md:col-start-2 md:pl-16'} pl-24 md:pl-0`}>
-                    <motion.h3
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      className="text-4xl md:text-5xl font-black text-black dark:text-white mb-4 capitalize"
-                    >
+                    <h3 className="text-4xl md:text-5xl font-black text-black dark:text-white mb-4 capitalize">
                       {category}
-                    </motion.h3>
+                    </h3>
                     <div className={`h-1 w-24 bg-gradient-to-r ${gradient} rounded-full ${isLeft ? 'md:ml-auto' : ''}`} />
                   </div>
 
@@ -112,14 +94,10 @@ export default function SkillsSection({ heading, description, skills }: SkillsSe
                         const Icon = skill.logo ? getIconComponent(skill.logo) : null
                         
                         return (
-                          <motion.div
+                          <div
                             key={skill.id}
-                            initial={{ opacity: 0, scale: 0.8 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: index * 0.05 }}
-                            whileHover={{ scale: 1.1, rotate: 5 }}
-                            className="group relative"
+                            className="group relative animate-scale-in opacity-0 hover:scale-110 hover:rotate-6 transition-all duration-300"
+                            style={{ animationDelay: `${catIndex * 200 + index * 50}ms`, animationFillMode: 'forwards' }}
                           >
                             <div className={`absolute -inset-1 bg-gradient-to-r ${gradient} rounded-2xl blur opacity-0 group-hover:opacity-75 transition-opacity`} />
                             <div className="relative bg-white dark:bg-gray-900 rounded-2xl border-2 border-gray-200 dark:border-gray-800 p-4 flex flex-col items-center gap-3 transition-all">
@@ -134,24 +112,19 @@ export default function SkillsSection({ heading, description, skills }: SkillsSe
                                 {skill.name}
                               </span>
                             </div>
-                          </motion.div>
+                          </div>
                         )
                       })}
                     </div>
                   </div>
-                </motion.div>
+                </div>
               )
             })}
           </div>
         </div>
 
         {/* Bottom Stats */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mt-32 text-center"
-        >
+        <div className="mt-32 text-center animate-fade-in-up">
           <div className="inline-flex items-center gap-8 px-8 py-6 bg-white dark:bg-gray-900 rounded-3xl border-2 border-gray-200 dark:border-gray-800 shadow-xl">
             <div>
               <div className="text-3xl font-black text-black dark:text-white">{skills.length}+</div>
@@ -168,7 +141,7 @@ export default function SkillsSection({ heading, description, skills }: SkillsSe
               <div className="text-sm text-gray-600 dark:text-gray-400">Years</div>
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   )

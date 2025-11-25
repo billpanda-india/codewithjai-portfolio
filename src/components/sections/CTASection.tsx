@@ -1,6 +1,3 @@
-'use client'
-
-import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { ArrowRight, Mail, Calendar } from 'lucide-react'
 
@@ -46,30 +43,11 @@ export default function CTASection({
       </div>
 
       {/* Floating Orbs - Same as Hero */}
-      <motion.div
-        animate={{
-          scale: [1, 1.2, 1],
-          opacity: [0.3, 0.5, 0.3],
-        }}
-        transition={{ duration: 8, repeat: Infinity }}
-        className="absolute top-1/4 left-1/4 w-96 h-96 bg-emerald-500/20 dark:bg-emerald-500/30 rounded-full blur-3xl"
-      />
-      <motion.div
-        animate={{
-          scale: [1.2, 1, 1.2],
-          opacity: [0.3, 0.5, 0.3],
-        }}
-        transition={{ duration: 10, repeat: Infinity }}
-        className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-500/20 dark:bg-blue-500/30 rounded-full blur-3xl"
-      />
+      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-emerald-500/20 dark:bg-emerald-500/30 rounded-full blur-3xl animate-pulse" />
+      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-500/20 dark:bg-blue-500/30 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
 
       <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="space-y-8"
-        >
+        <div className="space-y-8 animate-fade-in-up">
           {/* Badge */}
           <div className="inline-flex items-center gap-2 px-6 py-3 bg-emerald-100 dark:bg-emerald-500/10 backdrop-blur-sm border border-emerald-200 dark:border-emerald-500/30 rounded-full text-emerald-700 dark:text-emerald-400 font-medium shadow-lg dark:shadow-emerald-500/20">
             <Calendar className="w-4 h-4" />
@@ -93,55 +71,38 @@ export default function CTASection({
           {/* Buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-8">
             <Link href={primaryButtonUrl}>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="group px-8 py-4 bg-black dark:bg-gradient-to-r dark:from-emerald-500 dark:to-blue-500 text-white rounded-full font-bold text-lg shadow-2xl dark:shadow-emerald-500/50 flex items-center gap-2"
-              >
+              <button className="group px-8 py-4 bg-black dark:bg-gradient-to-r dark:from-emerald-500 dark:to-blue-500 text-white rounded-full font-bold text-lg shadow-2xl dark:shadow-emerald-500/50 flex items-center gap-2 hover:scale-105 active:scale-95 transition-transform duration-200">
                 <Mail className="w-5 h-5" />
                 {primaryButtonText}
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </motion.button>
+              </button>
             </Link>
             <Link href={secondaryButtonUrl}>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-8 py-4 bg-white dark:bg-white/5 text-black dark:text-white rounded-full font-bold text-lg border-2 border-gray-300 dark:border-white/20 hover:border-black dark:hover:border-white/40 dark:backdrop-blur-sm flex items-center gap-2 transition-all"
-              >
+              <button className="px-8 py-4 bg-white dark:bg-white/5 text-black dark:text-white rounded-full font-bold text-lg border-2 border-gray-300 dark:border-white/20 hover:border-black dark:hover:border-white/40 dark:backdrop-blur-sm flex items-center gap-2 transition-all hover:scale-105 active:scale-95 duration-200">
                 {secondaryButtonText}
-              </motion.button>
+              </button>
             </Link>
           </div>
 
           {/* Stats */}
           <div className="grid grid-cols-3 gap-8 max-w-2xl mx-auto pt-16">
-            <motion.div
-              whileHover={{ y: -5 }}
-              className="relative group p-6 bg-white dark:bg-gray-900/50 dark:backdrop-blur-sm rounded-2xl border-2 border-gray-200 dark:border-gray-800 dark:hover:border-emerald-500/50 transition-all"
-            >
+            <div className="relative group p-6 bg-white dark:bg-gray-900/50 dark:backdrop-blur-sm rounded-2xl border-2 border-gray-200 dark:border-gray-800 dark:hover:border-emerald-500/50 transition-all hover:-translate-y-1 duration-300">
               <div className="absolute -inset-1 bg-gradient-to-r from-emerald-500 to-blue-500 rounded-2xl blur opacity-0 dark:group-hover:opacity-30 transition-opacity -z-10" />
               <div className="text-4xl font-black text-black dark:text-white mb-2">{stat1Number}</div>
               <div className="text-sm text-gray-600 dark:text-gray-400">{stat1Label}</div>
-            </motion.div>
-            <motion.div
-              whileHover={{ y: -5 }}
-              className="relative group p-6 bg-white dark:bg-gray-900/50 dark:backdrop-blur-sm rounded-2xl border-2 border-gray-200 dark:border-gray-800 dark:hover:border-blue-500/50 transition-all"
-            >
+            </div>
+            <div className="relative group p-6 bg-white dark:bg-gray-900/50 dark:backdrop-blur-sm rounded-2xl border-2 border-gray-200 dark:border-gray-800 dark:hover:border-blue-500/50 transition-all hover:-translate-y-1 duration-300">
               <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-2xl blur opacity-0 dark:group-hover:opacity-30 transition-opacity -z-10" />
               <div className="text-4xl font-black text-black dark:text-white mb-2">{stat2Number}</div>
               <div className="text-sm text-gray-600 dark:text-gray-400">{stat2Label}</div>
-            </motion.div>
-            <motion.div
-              whileHover={{ y: -5 }}
-              className="relative group p-6 bg-white dark:bg-gray-900/50 dark:backdrop-blur-sm rounded-2xl border-2 border-gray-200 dark:border-gray-800 dark:hover:border-purple-500/50 transition-all"
-            >
+            </div>
+            <div className="relative group p-6 bg-white dark:bg-gray-900/50 dark:backdrop-blur-sm rounded-2xl border-2 border-gray-200 dark:border-gray-800 dark:hover:border-purple-500/50 transition-all hover:-translate-y-1 duration-300">
               <div className="absolute -inset-1 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl blur opacity-0 dark:group-hover:opacity-30 transition-opacity -z-10" />
               <div className="text-4xl font-black text-black dark:text-white mb-2">{stat3Number}</div>
               <div className="text-sm text-gray-600 dark:text-gray-400">{stat3Label}</div>
-            </motion.div>
+            </div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   )

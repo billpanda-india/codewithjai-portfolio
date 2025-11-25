@@ -1,6 +1,3 @@
-'use client'
-
-import { motion } from 'framer-motion'
 import Image from 'next/image'
 import { Star, Quote } from 'lucide-react'
 import { Testimonial } from '@/types/database'
@@ -17,31 +14,22 @@ export default function TestimonialsSection({ testimonials }: TestimonialsSectio
       
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-20"
-        >
+        <div className="text-center mb-20 animate-fade-in-up">
           <h2 className="text-5xl md:text-7xl font-black text-black dark:text-white mb-6">
             Client <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-blue-500">Testimonials</span>
           </h2>
           <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
             What clients say about working with me
           </p>
-        </motion.div>
+        </div>
 
         {/* Testimonials Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {testimonials.map((testimonial, index) => (
-            <motion.div
+            <div
               key={testimonial.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              whileHover={{ y: -8 }}
-              className="group relative"
+              className="group relative animate-fade-in-up opacity-0 hover:-translate-y-2 transition-transform duration-300"
+              style={{ animationDelay: `${index * 100}ms`, animationFillMode: 'forwards' }}
             >
               {/* Glow */}
               <div className="absolute -inset-1 bg-gradient-to-r from-emerald-500 to-blue-500 rounded-3xl blur-lg opacity-0 group-hover:opacity-50 transition-opacity" />
@@ -83,7 +71,7 @@ export default function TestimonialsSection({ testimonials }: TestimonialsSectio
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>

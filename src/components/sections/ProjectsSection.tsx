@@ -1,9 +1,7 @@
+
 'use client'
 
-import { motion, useScroll, useTransform } from 'framer-motion'
-import { useRef } from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
 import { ArrowRight, ExternalLink } from 'lucide-react'
 import { Project } from '@/types/database'
 
@@ -14,22 +12,11 @@ interface ProjectsSectionProps {
 }
 
 export default function ProjectsSection({ heading, description, projects }: ProjectsSectionProps) {
-  const containerRef = useRef(null)
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"]
-  })
-
   return (
-    <section ref={containerRef} className="relative py-32 bg-white dark:bg-black overflow-hidden">
+    <section className="relative py-32 bg-white dark:bg-black overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mb-20"
-        >
+        <div className="mb-20 animate-fade-in-up">
           <div className="flex items-end justify-between mb-8">
             <div>
               <h2 className="text-5xl md:text-7xl font-black text-black dark:text-white mb-4">
@@ -42,18 +29,14 @@ export default function ProjectsSection({ heading, description, projects }: Proj
               )}
             </div>
             <Link href="/projects" className="hidden lg:block">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-6 py-3 bg-black dark:bg-white text-white dark:text-black rounded-full font-bold flex items-center gap-2"
-              >
+              <button className="px-6 py-3 bg-black dark:bg-white text-white dark:text-black rounded-full font-bold flex items-center gap-2 hover:scale-105 active:scale-95 transition-transform duration-200">
                 View All
                 <ArrowRight className="w-5 h-5" />
-              </motion.button>
+              </button>
             </Link>
           </div>
           <div className="h-px bg-gradient-to-r from-gray-300 via-gray-200 to-transparent dark:from-gray-700 dark:via-gray-800 dark:to-transparent" />
-        </motion.div>
+        </div>
 
         {/* Projects - Staggered Cards Layout */}
         <div className="space-y-32">
@@ -61,58 +44,56 @@ export default function ProjectsSection({ heading, description, projects }: Proj
             const isEven = index % 2 === 0
 
             return (
-              <motion.div
+              <div
                 key={project.id}
-                initial={{ opacity: 0, y: 100 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.8, delay: index * 0.2 }}
-                className={`grid lg:grid-cols-2 gap-12 items-center ${isEven ? '' : 'lg:grid-flow-dense'}`}
+                className={`grid lg:grid-cols-2 gap-12 items-center ${isEven ? '' : 'lg:grid-flow-dense'} animate-fade-in-up opacity-0`}
+                style={{ animationDelay: `${index * 200}ms`, animationFillMode: 'forwards' }}
               >
                 {/* Website Preview */}
                 <Link 
                   href={`/projects/${project.slug}`}
                   className={`group relative ${isEven ? '' : 'lg:col-start-2'}`}
                 >
-                  <motion.div
-                    whileHover={{ scale: 1.02 }}
-                    className="relative aspect-[4/3] rounded-3xl overflow-hidden bg-gray-100 dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-800"
-                  >
+                  <div className="relative aspect-[4/3] rounded-3xl overflow-hidden bg-white dark:bg-gray-950 border-2 border-gray-200 dark:border-gray-800 hover:scale-[1.02] transition-transform duration-300 shadow-2xl">
                     {project.website_url ? (
                       <>
+                        {/* Live Website Preview */}
                         <iframe
                           src={project.website_url}
-                          className="w-full h-full pointer-events-none"
-                          title={project.title}
+                          className="w-full h-full border-0"
+                          title={`Live preview of ${project.title}`}
                           loading="lazy"
+                          style={{
+                            width: '100%',
+                            height: '100%',
+                            border: 'none',
+                            pointerEvents: 'none'
+                          }}
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
                       </>
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-emerald-500 to-blue-500">
-                        <span className="text-6xl">🚀</span>
+                      <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-emerald-500 via-blue-500 to-purple-600">
+                        <span className="text-8xl">🚀</span>
                       </div>
                     )}
                     
                     {/* Hover Overlay */}
-                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                      <div className="px-6 py-3 bg-white dark:bg-black text-black dark:text-white rounded-full font-bold flex items-center gap-2">
+                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none">
+                      <div className="px-6 py-3 bg-white dark:bg-black text-black dark:text-white rounded-full font-bold flex items-center gap-2 shadow-xl transform group-hover:scale-110 transition-transform duration-300">
                         View Project
                         <ExternalLink className="w-4 h-4" />
                       </div>
                     </div>
-                  </motion.div>
+                  </div>
 
                   {/* Floating Number */}
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.5 }}
-                    className="absolute -top-8 -left-8 w-20 h-20 bg-emerald-500 rounded-full flex items-center justify-center text-white font-black text-3xl shadow-2xl"
+                  <div 
+                    className="absolute -top-8 -left-8 w-20 h-20 bg-emerald-500 rounded-full flex items-center justify-center text-white font-black text-3xl shadow-2xl animate-scale-in opacity-0"
+                    style={{ animationDelay: `${index * 200 + 500}ms`, animationFillMode: 'forwards' }}
                   >
                     {index + 1}
-                  </motion.div>
+                  </div>
                 </Link>
 
                 {/* Content */}
@@ -170,25 +151,20 @@ export default function ProjectsSection({ heading, description, projects }: Proj
                     </Link>
                   </div>
                 </div>
-              </motion.div>
+              </div>
             )
           })}
         </div>
 
         {/* View All Mobile */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mt-20 text-center lg:hidden"
-        >
+        <div className="mt-20 text-center lg:hidden animate-fade-in-up">
           <Link href="/projects">
             <button className="px-8 py-4 bg-black dark:bg-white text-white dark:text-black rounded-full font-bold flex items-center gap-2 mx-auto">
               View All Projects
               <ArrowRight className="w-5 h-5" />
             </button>
           </Link>
-        </motion.div>
+        </div>
       </div>
     </section>
   )

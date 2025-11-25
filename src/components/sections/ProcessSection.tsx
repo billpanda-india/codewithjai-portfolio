@@ -1,6 +1,3 @@
-'use client'
-
-import { motion } from 'framer-motion'
 import * as Icons from 'lucide-react'
 
 type ProcessStep = {
@@ -20,9 +17,9 @@ export default function ProcessSection({ steps = [] }: ProcessSectionProps) {
     <section className="relative py-32 bg-white dark:bg-black">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="text-center mb-20">
+        <div className="text-center mb-20 animate-fade-in-up">
           <h2 className="text-5xl md:text-7xl font-black text-black dark:text-white mb-6">
-            My <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-blue-500">Process</span>
+            My <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-blue-500 animate-gradient">Process</span>
           </h2>
           <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
             A proven approach to delivering exceptional results
@@ -37,7 +34,8 @@ export default function ProcessSection({ steps = [] }: ProcessSectionProps) {
             return (
               <div
                 key={index}
-                className="relative group transition-transform hover:-translate-y-2"
+                className="relative group hover:-translate-y-2 transition-all animate-fade-in-up"
+                style={{ animationDelay: `${index * 0.1}s` }}
               >
                 {/* Number */}
                 <div className="absolute -top-4 -left-4 w-12 h-12 bg-black dark:bg-white text-white dark:text-black rounded-full flex items-center justify-center font-black text-xl shadow-xl z-10">
