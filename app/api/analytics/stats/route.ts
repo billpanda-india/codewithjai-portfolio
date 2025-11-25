@@ -68,11 +68,12 @@ export async function GET(request: NextRequest) {
       .select('browser')
       .gte('created_at', thirtyDaysAgo.toISOString())
     
-    // Get top pages
+    // Get top pages (exclude admin pages)
     const { data: topPages } = await supabase
       .from('page_views')
       .select('page_url')
       .gte('created_at', sevenDaysAgo.toISOString())
+      .not('page_url', 'like', '%/admin%')
     
     // Get contact submissions count
     const { count: contactCount } = await supabase
@@ -219,7 +220,10 @@ function processBrowserData(browsers: any[]) {
 function processPageData(pages: any[]) {
   const pageCount: any = {}
   pages.forEach(p => {
-    pageCount[p.page_url] = (pageCount[p.page_url] || 0) + 1
+    // Exclude admin dashboard pages from top pages
+    if (!p.page_url.startsWith('/admin')) {
+      pageCount[p.page_url] = (pageCount[p.page_url] || 0) + 1
+    }
   })
   
   return Object.entries(pageCount)

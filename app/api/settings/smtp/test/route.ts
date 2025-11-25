@@ -35,7 +35,7 @@ export async function POST(request: Request) {
     const transporter = nodemailer.createTransport({
       host: smtpSettings.host,
       port: smtpSettings.port,
-      secure: smtpSettings.port === 465,
+      secure: smtpSettings.use_ssl ?? (smtpSettings.port === 465),
       auth: {
         user: smtpSettings.user_email,
         pass: smtpSettings.password,
@@ -43,7 +43,7 @@ export async function POST(request: Request) {
     })
 
     // Send test email
-    await transporter.sendMail({
+    const info = await transporter.sendMail({
       from: `"${smtpSettings.from_name}" <${smtpSettings.from_email}>`,
       to: testEmail,
       subject: 'SMTP Test Email',
@@ -54,9 +54,12 @@ export async function POST(request: Request) {
       `,
     })
 
+    console.log('Email sent successfully:', info)
+
     return NextResponse.json({ 
       success: true, 
-      message: 'Test email sent successfully!' 
+      message: 'Test email sent successfully!',
+      messageId: info.messageId
     })
   } catch (error) {
     console.error('Error sending test email:', error)

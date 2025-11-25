@@ -112,8 +112,8 @@ export default function AdminDashboard() {
 
     fetchRealData()
     
-    // Refresh data every 60 seconds (reduced from 30)
-    const interval = setInterval(fetchRealData, 60000)
+    // Auto-refresh every 10 seconds for real-time updates
+    const interval = setInterval(fetchRealData, 10000)
     return () => clearInterval(interval)
   }, [timeFrame])
 

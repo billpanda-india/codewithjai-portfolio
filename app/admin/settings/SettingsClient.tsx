@@ -63,6 +63,7 @@ interface SmtpSettings {
   password: string
   from_email: string
   from_name: string
+  use_ssl: boolean
 }
 
 interface SiteLink {
@@ -721,15 +722,30 @@ export default function SettingsClient() {
                     />
                   </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="port">SMTP Port</Label>
-                    <Input
-                      id="port"
-                      type="number"
-                      value={smtpSettings?.port || ''}
-                      onChange={(e) => setSmtpSettings(prev => prev ? {...prev, port: parseInt(e.target.value)} : null)}
-                      placeholder="465"
-                    />
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="port">SMTP Port</Label>
+                      <Input
+                        id="port"
+                        type="number"
+                        value={smtpSettings?.port || ''}
+                        onChange={(e) => setSmtpSettings(prev => prev ? {...prev, port: parseInt(e.target.value)} : null)}
+                        placeholder="465"
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="use_ssl">Encryption</Label>
+                      <select
+                        id="use_ssl"
+                        value={smtpSettings?.use_ssl ? 'ssl' : 'tls'}
+                        onChange={(e) => setSmtpSettings(prev => prev ? {...prev, use_ssl: e.target.value === 'ssl'} : null)}
+                        className="flex h-10 w-full rounded-md border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 px-3 py-2 text-sm text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                      >
+                        <option value="ssl">SSL/TLS (Port 465)</option>
+                        <option value="tls">STARTTLS (Port 587)</option>
+                      </select>
+                    </div>
                   </div>
 
                   <div className="space-y-2">

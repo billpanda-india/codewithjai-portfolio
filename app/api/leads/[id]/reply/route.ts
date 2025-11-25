@@ -41,7 +41,7 @@ export async function POST(
     const transporter = nodemailer.createTransport({
       host: smtpSettings.host,
       port: smtpSettings.port,
-      secure: smtpSettings.port === 465,
+      secure: smtpSettings.use_ssl ?? (smtpSettings.port === 465),
       auth: {
         user: smtpSettings.user_email,
         pass: smtpSettings.password
