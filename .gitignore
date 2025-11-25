@@ -64,6 +64,9 @@ web_modules/
 .env.*
 !.env.example
 
+# Kiro settings (contains secrets)
+.kiro/
+
 # parcel-bundler cache
 .cache
 .parcel-cache
