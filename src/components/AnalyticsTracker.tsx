@@ -19,16 +19,25 @@ export default function AnalyticsTracker() {
   const pathname = usePathname()
   
   useEffect(() => {
-    // Track ALL pages including admin (for IP monitoring)
-    // Note: Admin pages are tracked for security monitoring purposes
-    
     const trackPageView = async () => {
       try {
+        const currentUrl = window.location.href
+        
+        // Skip tracking for localhost
+        if (currentUrl.includes('localhost')) {
+          return
+        }
+        
+        // Skip tracking for admin pages
+        if (pathname?.startsWith('/admin')) {
+          return
+        }
+        
         await fetch('/api/analytics/track', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            pageUrl: window.location.href,
+            pageUrl: currentUrl,
             referrer: document.referrer,
             sessionId: getSessionId()
           })
