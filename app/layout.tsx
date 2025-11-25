@@ -8,6 +8,8 @@ const inter = Inter({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800", "900"],
   variable: "--font-inter",
+  display: 'swap',
+  preload: true,
 });
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -43,6 +45,10 @@ export default async function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        {/* Preconnect to external domains */}
+        <link rel="preconnect" href="https://irhsqcvxyovpvquslzki.supabase.co" />
+        <link rel="dns-prefetch" href="https://irhsqcvxyovpvquslzki.supabase.co" />
+        
         <script
           dangerouslySetInnerHTML={{
             __html: `
