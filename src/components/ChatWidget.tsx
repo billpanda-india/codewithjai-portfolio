@@ -286,6 +286,7 @@ export default function ChatWidget() {
     return (
       <button
         onClick={handleOpen}
+        aria-label="Open chat"
         className="fixed bottom-6 right-6 w-16 h-16 bg-gradient-to-br from-emerald-500 to-blue-500 text-white rounded-full shadow-2xl hover:scale-110 transition-transform flex items-center justify-center z-50 group"
       >
         <MessageCircle className="w-7 h-7" />
@@ -330,12 +331,14 @@ export default function ChatWidget() {
           )}
           <button
             onClick={() => setIsMinimized(!isMinimized)}
+            aria-label="Minimize chat"
             className="p-2 hover:bg-white/20 rounded-lg transition-colors"
           >
             <Minimize2 className="w-4 h-4" />
           </button>
           <button
             onClick={() => setIsOpen(false)}
+            aria-label="Close chat"
             className="p-2 hover:bg-white/20 rounded-lg transition-colors"
           >
             <X className="w-4 h-4" />
@@ -475,6 +478,7 @@ export default function ChatWidget() {
                     <button
                       onClick={sendMessage}
                       disabled={!newMessage.trim()}
+                      aria-label="Send message"
                       className="p-2 bg-gradient-to-r from-emerald-500 to-blue-500 text-white rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50"
                     >
                       <Send className="w-5 h-5" />

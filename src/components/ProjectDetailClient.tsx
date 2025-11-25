@@ -96,12 +96,14 @@ export default function ProjectDetailClient({ project, testimonials }: ProjectDe
               <>
                 <button
                   onClick={prevImage}
+                  aria-label="Previous image"
                   className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/90 dark:bg-black/90 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:scale-110"
                 >
                   <ChevronLeft className="w-6 h-6 text-black dark:text-white" />
                 </button>
                 <button
                   onClick={nextImage}
+                  aria-label="Next image"
                   className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/90 dark:bg-black/90 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:scale-110"
                 >
                   <ChevronRight className="w-6 h-6 text-black dark:text-white" />
@@ -122,6 +124,7 @@ export default function ProjectDetailClient({ project, testimonials }: ProjectDe
                 <button
                   key={image.id}
                   onClick={() => setCurrentImageIndex(index)}
+                  aria-label={`View image ${index + 1}`}
                   className={`relative flex-shrink-0 w-24 h-24 rounded-lg overflow-hidden border-2 transition-all ${
                     index === currentImageIndex
                       ? 'border-emerald-500 scale-105'
@@ -281,6 +284,7 @@ export default function ProjectDetailClient({ project, testimonials }: ProjectDe
           >
             <button
               onClick={() => setIsLightboxOpen(false)}
+              aria-label="Close lightbox"
               className="absolute top-4 right-4 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-colors"
             >
               <X className="w-6 h-6 text-white" />
@@ -301,6 +305,7 @@ export default function ProjectDetailClient({ project, testimonials }: ProjectDe
                       e.stopPropagation()
                       prevImage()
                     }}
+                    aria-label="Previous image"
                     className="absolute left-4 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-colors"
                   >
                     <ChevronLeft className="w-6 h-6 text-white" />
@@ -310,6 +315,7 @@ export default function ProjectDetailClient({ project, testimonials }: ProjectDe
                       e.stopPropagation()
                       nextImage()
                     }}
+                    aria-label="Next image"
                     className="absolute right-4 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-colors"
                   >
                     <ChevronRight className="w-6 h-6 text-white" />

@@ -50,7 +50,11 @@ export default async function robots(): Promise<MetadataRoute.Robots> {
     }))
 
     return {
-      rules: robotRules,
+      rules: robotRules.length > 0 ? robotRules : {
+        userAgent: '*',
+        allow: '/',
+        disallow: ['/admin/', '/api/'],
+      },
       sitemap: `${baseUrl}/sitemap.xml`,
     }
   } catch (error) {

@@ -136,6 +136,7 @@ export default function Footer({ footer, siteName, logo }: FooterProps) {
                       href={social.url}
                       target="_blank"
                       rel="noopener noreferrer"
+                      aria-label={`Visit our ${social.icon_name || 'social'} profile`}
                       whileHover={{ scale: 1.1, y: -3 }}
                       whileTap={{ scale: 0.95 }}
                       className="relative group w-11 h-11 bg-white dark:bg-gray-900 border-2 border-gray-300 dark:border-gray-800 hover:bg-gradient-to-r hover:from-emerald-500 hover:to-blue-500 hover:border-transparent rounded-full flex items-center justify-center transition-all shadow-lg hover:shadow-emerald-500/50"
