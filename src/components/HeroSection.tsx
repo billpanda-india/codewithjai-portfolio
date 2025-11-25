@@ -1,5 +1,9 @@
+'use client'
+
+import { useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { ArrowRight, Sparkles, TrendingUp, Users, Award, ChevronDown } from 'lucide-react'
+import { gsap } from 'gsap'
 
 interface HeroSectionProps {
   title?: string
@@ -11,6 +15,87 @@ interface HeroSectionProps {
 }
 
 export default function HeroSection({ title, titleHighlight, subtitle, ctaLabel, ctaUrl }: HeroSectionProps) {
+  const badgeRef = useRef(null)
+  const titleRef = useRef(null)
+  const highlightRef = useRef(null)
+  const subtitleRef = useRef(null)
+  const buttonsRef = useRef(null)
+  const statsRef = useRef(null)
+  const scrollRef = useRef(null)
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Badge - Scale in with bounce
+      gsap.from(badgeRef.current, {
+        scale: 0,
+        opacity: 0,
+        duration: 0.6,
+        ease: 'back.out(2)',
+        delay: 0.2,
+      })
+
+      // Title - Slide from left with fade
+      gsap.from(titleRef.current, {
+        x: -100,
+        opacity: 0,
+        duration: 1,
+        ease: 'power3.out',
+        delay: 0.4,
+      })
+
+      // Highlight - Slide from right with rotation
+      gsap.from(highlightRef.current, {
+        x: 100,
+        opacity: 0,
+        rotationY: 90,
+        duration: 1,
+        ease: 'power3.out',
+        delay: 0.6,
+      })
+
+      // Subtitle - Fade in from bottom
+      gsap.from(subtitleRef.current, {
+        y: 50,
+        opacity: 0,
+        duration: 0.8,
+        ease: 'power2.out',
+        delay: 0.8,
+      })
+
+      // Buttons - Stagger from bottom with bounce
+      gsap.from(buttonsRef.current?.children || [], {
+        y: 60,
+        opacity: 0,
+        duration: 0.7,
+        stagger: 0.15,
+        ease: 'back.out(1.5)',
+        delay: 1,
+      })
+
+      // Stats - Stagger scale in
+      gsap.from(statsRef.current?.children || [], {
+        scale: 0,
+        opacity: 0,
+        duration: 0.6,
+        stagger: 0.1,
+        ease: 'back.out(1.7)',
+        delay: 1.2,
+      })
+
+      // Scroll indicator - Fade in
+      gsap.from(scrollRef.current, {
+        opacity: 0,
+        y: -20,
+        duration: 0.8,
+        ease: 'power2.out',
+        delay: 1.5,
+      })
+    })
+
+    return () => ctx.revert()
+  }, [])
+
+  return (
   return (
     <section className="relative min-h-screen bg-white dark:bg-black overflow-hidden flex items-center">
       {/* Animated Grid Background */}
@@ -26,31 +111,31 @@ export default function HeroSection({ title, titleHighlight, subtitle, ctaLabel,
       <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
         <div className="text-center space-y-12">
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-6 py-3 bg-emerald-500/10 dark:bg-emerald-500/10 border border-emerald-500/30 dark:border-emerald-500/20 rounded-full backdrop-blur-sm animate-fade-in">
+          <div ref={badgeRef} className="inline-flex items-center gap-2 px-6 py-3 bg-emerald-500/10 dark:bg-emerald-500/10 border border-emerald-500/30 dark:border-emerald-500/20 rounded-full backdrop-blur-sm">
             <Sparkles className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
             <span className="text-emerald-600 dark:text-emerald-400 font-medium">Available for Freelance</span>
           </div>
 
           {/* Main Heading */}
-          <div className="space-y-6 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+          <div className="space-y-6">
             <h1 className="text-6xl md:text-8xl lg:text-9xl font-black leading-none">
-              <span className="block text-black dark:text-white mb-4">
+              <span ref={titleRef} className="block text-black dark:text-white mb-4">
                 {title || "Building Digital"}
               </span>
               <span className="block">
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 via-blue-500 to-purple-500 dark:from-emerald-400 dark:via-blue-400 dark:to-purple-400 animate-gradient">
+                <span ref={highlightRef} className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 via-blue-500 to-purple-500 dark:from-emerald-400 dark:via-blue-400 dark:to-purple-400 animate-gradient">
                   {titleHighlight || "Excellence"}
                 </span>
               </span>
             </h1>
             
-            <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed">
+            <p ref={subtitleRef} className="text-xl md:text-2xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed">
               {subtitle || "Senior Full-Stack Developer crafting exceptional digital experiences with cutting-edge technologies"}
             </p>
           </div>
 
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
+          <div ref={buttonsRef} className="flex flex-col sm:flex-row items-center justify-center gap-4">
             {ctaLabel && ctaUrl && (
               <Link href={ctaUrl}>
                 <button className="group px-8 py-4 bg-gradient-to-r from-emerald-500 to-blue-500 text-white rounded-full font-bold text-lg shadow-2xl shadow-emerald-500/30 dark:shadow-emerald-500/50 flex items-center gap-2 hover:scale-105 active:scale-95 transition-transform">
@@ -67,7 +152,7 @@ export default function HeroSection({ title, titleHighlight, subtitle, ctaLabel,
           </div>
 
           {/* Stats */}
-          <div className="grid grid-cols-3 gap-8 max-w-3xl mx-auto pt-16 animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
+          <div ref={statsRef} className="grid grid-cols-3 gap-8 max-w-3xl mx-auto pt-16">
             {[
               { icon: TrendingUp, value: '50+', label: 'Projects Delivered' },
               { icon: Users, value: '30+', label: 'Happy Clients' },
@@ -85,7 +170,7 @@ export default function HeroSection({ title, titleHighlight, subtitle, ctaLabel,
           </div>
 
           {/* Scroll Indicator */}
-          <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-fade-in" style={{ animationDelay: '1s' }}>
+          <div ref={scrollRef} className="absolute bottom-10 left-1/2 transform -translate-x-1/2">
             <div className="flex flex-col items-center gap-2 text-gray-400 dark:text-gray-500 animate-bounce">
               <span className="text-sm font-medium">Scroll to explore</span>
               <ChevronDown className="w-6 h-6" />
