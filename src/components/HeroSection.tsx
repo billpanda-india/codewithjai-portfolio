@@ -15,13 +15,13 @@ interface HeroSectionProps {
 }
 
 export default function HeroSection({ title, titleHighlight, subtitle, ctaLabel, ctaUrl }: HeroSectionProps) {
-  const badgeRef = useRef(null)
-  const titleRef = useRef(null)
-  const highlightRef = useRef(null)
-  const subtitleRef = useRef(null)
-  const buttonsRef = useRef(null)
-  const statsRef = useRef(null)
-  const scrollRef = useRef(null)
+  const badgeRef = useRef<HTMLDivElement>(null)
+  const titleRef = useRef<HTMLSpanElement>(null)
+  const highlightRef = useRef<HTMLSpanElement>(null)
+  const subtitleRef = useRef<HTMLParagraphElement>(null)
+  const buttonsRef = useRef<HTMLDivElement>(null)
+  const statsRef = useRef<HTMLDivElement>(null)
+  const scrollRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -96,7 +96,6 @@ export default function HeroSection({ title, titleHighlight, subtitle, ctaLabel,
   }, [])
 
   return (
-  return (
     <section className="relative min-h-screen bg-white dark:bg-black overflow-hidden flex items-center">
       {/* Animated Grid Background */}
       <div className="absolute inset-0">
@@ -137,7 +136,7 @@ export default function HeroSection({ title, titleHighlight, subtitle, ctaLabel,
           {/* CTA Buttons */}
           <div ref={buttonsRef} className="flex flex-col sm:flex-row items-center justify-center gap-4">
             {ctaLabel && ctaUrl && (
-              <Link href={ctaUrl}>
+              <Link href={ctaUrl || '/projects'}>
                 <button className="group px-8 py-4 bg-gradient-to-r from-emerald-500 to-blue-500 text-white rounded-full font-bold text-lg shadow-2xl shadow-emerald-500/30 dark:shadow-emerald-500/50 flex items-center gap-2 hover:scale-105 active:scale-95 transition-transform">
                   {ctaLabel}
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
